@@ -53,6 +53,10 @@ public class FridgeService
                             		int currQuantity = currentItem.getItems().get(i.getType());
                             		int quantity =  currQuantity + item.getQuantity();                            		
                             		item.setQuantity(quantity);
+                            		
+                                	if(item.getType() == ItemType.SODA && item.getQuantity() > 12)
+                                		return Mono.empty();
+                                	
                             		repo.updateItem(id, item);
                                     return Mono.just(item);                            		
                             	}
