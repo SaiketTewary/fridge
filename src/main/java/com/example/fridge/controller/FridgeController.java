@@ -37,20 +37,26 @@ public class FridgeController
     
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-	public ResponseEntity<Mono<Integer>> createFridge()
+	public Mono<ResponseEntity<String>> createFridge()
 	{
     	Mono<Integer> value = fridgeService.create();
-        HttpStatus status = value.equals(Mono.empty()) ? HttpStatus.NOT_FOUND : HttpStatus.CREATED;
-        return new ResponseEntity<Mono<Integer>>(value , status);
+    	return value.flatMap(v ->
+    	{
+    		return Mono.just(new ResponseEntity<String>( v.toString() , HttpStatus.OK));
+    	})
+    	.defaultIfEmpty(new ResponseEntity("CREATE FAILED", HttpStatus.BAD_REQUEST));
 	}
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-	public ResponseEntity<Mono<Fridge>> getFridgeById(@PathVariable("id") int id)
+	public Mono<ResponseEntity<Fridge>> getFridgeById(@PathVariable("id") int id)
 	{
     	Mono<Fridge> value = fridgeService.findById(id);
-        HttpStatus status = value.equals(Mono.empty()) ? HttpStatus.NOT_FOUND : HttpStatus.OK;
-        return new ResponseEntity<Mono<Fridge>>(value , status);
+    	return value.flatMap(v ->
+    	{
+    		return Mono.just(new ResponseEntity<Fridge>( v , HttpStatus.OK));
+    	})
+    	.defaultIfEmpty(new ResponseEntity("", HttpStatus.NOT_FOUND));
 	}
     
     @RequestMapping(value = "/all", method = RequestMethod.GET)
@@ -87,11 +93,14 @@ public class FridgeController
     
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-	public ResponseEntity<Mono<String>> removeFridge(@PathVariable("id") int id)
+	public Mono<ResponseEntity<String>> removeFridge(@PathVariable("id") int id)
 	{
     	Mono<Fridge> value = fridgeService.delete(id);
-    	HttpStatus status = value.equals(Mono.empty()) ? HttpStatus.NOT_FOUND : HttpStatus.OK;
-    	return new ResponseEntity<Mono<String>>(status);
+    	return value.flatMap(v ->
+    	{
+    		return Mono.just(new ResponseEntity<String>( "DELETED" , HttpStatus.OK));
+    	})
+    	.defaultIfEmpty(new ResponseEntity("DELET Item Failed", HttpStatus.BAD_REQUEST));
 	}
     
 }

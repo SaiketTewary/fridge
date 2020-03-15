@@ -1,9 +1,12 @@
 package com.example.fridge.service;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.server.ServerResponse;
-
 import com.example.fridge.Repository.MemoryDBRepo;
 import com.example.fridge.model.Fridge;
 import com.example.fridge.model.Item;
@@ -17,8 +20,6 @@ public class FridgeService
 {
 	@Autowired
 	MemoryDBRepo repo;
-
-	static Mono<ServerResponse> notFound = ServerResponse.badRequest().build();
 	
 	public Mono<Integer> create() 
 	{
@@ -99,4 +100,5 @@ public class FridgeService
 	{
 		return repo.delete(id);
 	}
+	
 }
