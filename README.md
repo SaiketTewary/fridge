@@ -17,14 +17,19 @@ Use of a scalable HTTP framework, webflux
 
 **SOLUTION**:
 
-Authentication and Authorization: 
+Authentication and Authorization:
+	2 users has been registered 
+		1. Userid/PW - user/user
+		2. Userid/PW - admin/admin
 
-2 users has been registered 
-1. Userid/PW - user/user
-2. Userid/PW - admin/admin
+		User "user" is authorized for GET API's. User "admin" is authorized for all API's
 
-User "user" is authorized for GET API's. User "admin" is authorized for all API's
 
+Code Coverage: 
+	Code coverage is implemented with Jacoco. gradlew jacocoTestReport command will generate the coverage report to /build/coverage-report dir
+
+Log Details:
+	 Currently Log is reporting in console.
  
 APIs: 
 
