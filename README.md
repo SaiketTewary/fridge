@@ -63,7 +63,7 @@ APIs:
 
          Example :
           {
-			"type": SODA,
+			"type": "SODA",
 			"quantity": 10
           }	
             			   
@@ -87,7 +87,7 @@ APIs:
 
          Example :
           {
-			"type": SODA,
+			"type": "SODA",
 			"quantity": 10
           }	
  
